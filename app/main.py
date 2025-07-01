@@ -3,13 +3,13 @@ from abc import abstractmethod, ABC
 
 
 class Validator(ABC):
-    def __set_name__(self, owner: Validator, name: str) -> None:
+    def __set_name__(self, owner: type, name: str) -> None:
         self.protected_name = "_" + name
 
-    def __get__(self, instance: BurgerRecipe, owner: Validator) -> int | str:
+    def __get__(self, instance: type, owner: type) -> int | str:
         return getattr(instance, self.protected_name)
 
-    def __set__(self, instance: BurgerRecipe, value: int | str) -> None:
+    def __set__(self, instance: type, value: int | str) -> None:
         return setattr(instance, self.protected_name, self.validate(value))
 
     @abstractmethod
